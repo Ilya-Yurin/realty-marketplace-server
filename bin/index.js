@@ -5,8 +5,8 @@
 
 require('babel-register');
 
-const Logger = require('../lib/logger').default;
-const Server = require('../server/server').default;
+const Logger = require('../app/util/logger').default;
+const Server = require('../app/server/server').default;
 
 const LOG = Logger.getLogger('server');
 

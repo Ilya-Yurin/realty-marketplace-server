@@ -1,4 +1,4 @@
-import Logger from '../../lib/logger';
+import Logger from '../../app/util/logger';
 
 require('should');
 const sinon = require('sinon');

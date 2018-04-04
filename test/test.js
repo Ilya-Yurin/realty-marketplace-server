@@ -1,4 +1,4 @@
-import Server from '../server/server';
+import Server from '../app/server/server';
 import express from 'express';
 const assert = require('assert');
 
