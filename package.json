@@ -8,6 +8,9 @@
     "url": "https://github.com/Ilya-Yurin/realty-marketplace-server/issues"
   },
   "main": "bin/index.js",
+  "bin": {
+    "sequelize": "./node_modules/.bin/sequelize"
+  },
   "scripts": {
     "start": "node ./bin/index.js",
     "dev": "NODE_ENV='development' nodemon ./bin/index.js",
@@ -29,7 +32,13 @@
     "compression": "1.7.2",
     "cors": "2.8.4",
     "express": "4.16.3",
-    "log4js": "2.5.3"
+    "lodash": "4.17.5",
+    "log4js": "2.5.3",
+    "mysql2": "1.5.3",
+    "passport": "0.4.0",
+    "passport-google-oauth20": "1.0.0",
+    "sequelize": "4.37.5",
+    "sequelize-cli": "4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "8.2.2",

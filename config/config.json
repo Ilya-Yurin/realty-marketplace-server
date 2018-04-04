@@ -1,0 +1,52 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "admin",
+    "database": "realty_dev",
+    "host": "127.17.0.3",
+    "port": "8989",
+    "dialect": "mysql",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeSeed",
+    "autoMigrateOldSchema": true,
+    "operatorsAliases": false,
+    "pool": {
+      "max": 1000,
+      "min": 0,
+      "idle": 50000
+    }
+  },
+  "test": {
+    "username": "admin",
+    "password": "admin",
+    "database": "realty_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeSeed",
+    "autoMigrateOldSchema": true,
+    "operatorsAliases": false,
+    "pool": {
+      "max": 1000,
+      "min": 0,
+      "idle": 50000
+    }
+  },
+  "production": {
+    "username": "admin",
+    "password": "admin",
+    "database": "realty_prod",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "seederStorage": "sequelize",
+    "seederStorageTableName": "SequelizeSeed",
+    "autoMigrateOldSchema": true,
+    "operatorsAliases": false,
+    "logging": false,
+    "pool": {
+      "max": 1000,
+      "min": 0,
+      "idle": 50000
+    }
+  }
+}
