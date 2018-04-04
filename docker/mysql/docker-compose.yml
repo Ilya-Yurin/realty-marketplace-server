@@ -1,0 +1,11 @@
+mysql:
+  image: mysql:5.7
+  container_name: realty_mysql
+  restart: always
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: admin
+    MYSQL_DATABASE: realty_dev
+  ports:
+    - "8989:3306"
