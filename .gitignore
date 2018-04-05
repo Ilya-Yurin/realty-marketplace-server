@@ -9,3 +9,6 @@
 
 # NPM modules #
 node_modules
+
+# config files
+/config/keys.js
