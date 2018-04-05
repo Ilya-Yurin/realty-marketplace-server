@@ -10,7 +10,6 @@ module.exports = {
       email: 'admin@realty.com',
       type: 'admin',
       password: '$2a$10$WHd5V1TWvQ7SKteifpSk5O8T0BMJJ8q5JE/OGb/OGVrLZKMYHZgSW',
-      salt: '123123123123',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});

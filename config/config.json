@@ -3,7 +3,7 @@
     "username": "admin",
     "password": "admin",
     "database": "realty_dev",
-    "host": "127.17.0.3",
+    "host": "localhost",
     "port": "8989",
     "dialect": "mysql",
     "seederStorage": "sequelize",

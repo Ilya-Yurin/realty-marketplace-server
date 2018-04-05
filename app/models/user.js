@@ -1,4 +1,9 @@
-'use strict'
+'use strict';
+
+import { Model } from 'sequelize';
+
+const USER_TYPES = ['user', 'realtor', 'admin']
+exports.USER_TYPES = {  };
 
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
@@ -20,16 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM,
         allowNull: false,
+        values: [USER_TYPES],
+        defaultValue: 'user'
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      salt: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -53,6 +56,37 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
       tableName: 'users',
     })
+
+
+  /* Class methods */
+  user.findOrCreateGoogleAccount = async (google_id, data) => {
+    try{
+      const userInstance = await user.find({where: {google_id}});
+
+      if (userInstance instanceof Model) {
+        return userInstance;
+      }
+      else {
+        return user.createNewRecord(data.toJson());
+      }
+    } catch(error) {
+      return error;
+    }
+  }
+
+  user.findBy = async (filter) => {
+    try{
+      return await user.find({where: filter});
+    } catch(error) {
+      return error;
+    }
+  }
+
+  user.createNewRecord = async(data) => {
+    const instance = user.build(data);
+    return await instance.save();
+  }
+  /* /Class methods */
 
   /* Instance Methods */
   user.prototype.toJSON = function () {

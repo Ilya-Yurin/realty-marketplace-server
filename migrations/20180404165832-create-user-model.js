@@ -26,16 +26,13 @@ module.exports = {
       },
       type: {
         type: Sequelize.ENUM,
-        values: ['admin', 'user', 'realtor'],
+        values: ['user', 'realtor', 'admin'],
         allowNull: false,
+        defaultValue: 'user',
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-      salt: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       google_id: {
         type: Sequelize.STRING,
