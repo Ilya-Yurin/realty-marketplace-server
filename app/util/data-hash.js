@@ -7,7 +7,11 @@ export default class DataHash {
     return bcrypt.hash(value, rounds);
   }
 
-  static checkHash (value, hash) {
-    return bcrypt.compare(value, hash);
+  static async checkHash (value, hash) {
+    try {
+      return await bcrypt.compare(value, hash);
+    } catch (error) {
+      return false;
+    }
   }
 }

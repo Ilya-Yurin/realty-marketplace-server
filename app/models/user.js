@@ -1,11 +1,9 @@
 'use strict';
 
-import { Model } from 'sequelize';
-
-const USER_TYPES = ['user', 'realtor', 'admin']
-exports.USER_TYPES = {  };
+import { USERS_CONSTANT } from '../constant/';
 
 module.exports = (sequelize, DataTypes) => {
+
   const user = sequelize.define('user', {
       id: {
         type: DataTypes.UUIDV4,
@@ -27,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       type: {
         type: DataTypes.ENUM,
         allowNull: false,
-        values: [USER_TYPES],
-        defaultValue: 'user'
+        values: USERS_CONSTANT.USER_TYPES,
+        defaultValue: USERS_CONSTANT.USER,
       },
       password: {
         type: DataTypes.STRING,
@@ -36,10 +34,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+        unique:true,
         validate: {
           isEmail: true
         }
+      },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       google_id: {
         type: DataTypes.STRING,
@@ -57,35 +60,8 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'users',
     })
 
-
   /* Class methods */
-  user.findOrCreateGoogleAccount = async (google_id, data) => {
-    try{
-      const userInstance = await user.find({where: {google_id}});
 
-      if (userInstance instanceof Model) {
-        return userInstance;
-      }
-      else {
-        return user.createNewRecord(data.toJson());
-      }
-    } catch(error) {
-      return error;
-    }
-  }
-
-  user.findBy = async (filter) => {
-    try{
-      return await user.find({where: filter});
-    } catch(error) {
-      return error;
-    }
-  }
-
-  user.createNewRecord = async(data) => {
-    const instance = user.build(data);
-    return await instance.save();
-  }
   /* /Class methods */
 
   /* Instance Methods */
@@ -93,7 +69,15 @@ module.exports = (sequelize, DataTypes) => {
     delete this.dataValues.password;
     return this.get();
   }
+
+  user.prototype.isAdmin = function () {
+    return this.get().type === `${USERS_CONSTANT.ADMIN}`;
+  }
+
+  user.prototype.isRealtor = function () {
+    return this.get().type === `${USERS_CONSTANT.REALTOR}`;
+  }
   /* /Instance Methods */
 
-  return user
+  return user;
 }

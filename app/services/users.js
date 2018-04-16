@@ -3,19 +3,45 @@
 import { user } from '../models/';
 
 class UserService {
-  constructor () {
-    this.users = [];
+  constructor (users) {
+    this.users = users;
   }
 
-  getList () {
-    return user.findAll()
-      .then( list => {
-        return list;
-      })
-      .catch( e => {
-        return e;
-      });
+  async getList () {
+    try {
+      return await this.users.findAll();
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async createAccount (userData) {
+    //TODO add validation
+    try {
+      return await this.users.create(userData);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async findById (id) {
+    //TODO add validation
+    try {
+      return await this.users.findById(id);
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async update (id, data) {
+    //TODO add validation
+    try {
+      const userInstance = await this.users.findById(id);
+      return await userInstance.update(data);
+    } catch (error) {
+      return error;
+    }
   }
 }
 
-module.exports = new UserService();
+module.exports = new UserService(user);

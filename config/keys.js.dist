@@ -3,6 +3,8 @@
 const GOOGLE_CLIENT_ID = '--add-your-client-id--';
 const GOOGLE_CLIENT_SECRET = '--add-your-secret--';
 const GOOGLE_REDIRECT_URI = '--add-your-redirect-uri--';
+const SECRET_KEY = '--your-strong-secret-key--';
+const TOKEN_EXPIRES_IN = '3h';
 
 module.exports = Object.freeze({
   GOOGLE: {
@@ -10,7 +12,6 @@ module.exports = Object.freeze({
     CLIENT_SECRET: GOOGLE_CLIENT_SECRET,
     REDIRECT_URI: GOOGLE_REDIRECT_URI
   },
-  session: {
-    cookieKey: '--some-secret-key--',
-  }
+  SECRET_KEY,
+  TOKEN_EXPIRES_IN
 });

@@ -8,5 +8,5 @@ export function isLoggedIn ( req, res, next ) {
     return next();
   }
 
-  res.status(401).send( {msg: "error"} );
+  res.json({ message: "authentication error" });
 }

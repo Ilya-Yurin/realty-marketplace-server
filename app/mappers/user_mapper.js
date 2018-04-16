@@ -15,4 +15,16 @@ export default class UserMapper {
 
     return user;
   }
+
+  static fromRawData (rawData) {
+    const user = new User();
+
+    user.firstName = _.get(rawData, 'first_name');
+    user.lastName = _.get(rawData, 'last_name');
+    user.email = _.get(rawData, 'email');
+    user.phone = _.get(rawData, 'phone');
+    user.password = _.get(rawData, 'password');
+
+    return user;
+  }
 }
