@@ -32,10 +32,10 @@ export default class UserRepository {
   static createSocialQueryProperty (filter) {
     const queryFilterProps = [];
     if(_.has(filter, 'email') && !_.isNull(filter.email)) {
-      queryFilterProps.push({email: filter.email});
+      queryFilterProps.push({ email: filter.email });
     }
     if(_.has(filter, 'google_id') && !_.isNull(filter.google_id)) {
-      queryFilterProps.push({google_id: filter.google_id});
+      queryFilterProps.push({ google_id: filter.google_id });
     }
     return queryFilterProps;
   }

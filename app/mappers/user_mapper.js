@@ -7,11 +7,12 @@ export default class UserMapper {
   static fromGoogleToModel (rawData) {
     const user = new User();
 
-    user.email = _.get(rawData, 'emails.[0].value');
-    user.firstName = _.get(rawData, 'name.givenName');
-    user.lastName = _.get(rawData, 'name.familyName');
-    user.imageUrl = _.get(rawData, 'photos.[0].value');
-    user.googleId = _.get(rawData, 'id' );
+    user.email = _.get(rawData, '_json.email');
+    user.firstName = _.get(rawData, '_json.given_name');
+    user.lastName = _.get(rawData, '_json.family_name');
+    user.imageUrl = _.get(rawData, '_json.picture');
+    user.googleId = _.get(rawData, '_json.id' );
+    user.link = _.get(rawData, '_json.link' );
 
     return user;
   }
@@ -24,6 +25,7 @@ export default class UserMapper {
     user.email = _.get(rawData, 'email');
     user.phone = _.get(rawData, 'phone');
     user.password = _.get(rawData, 'password');
+    user.imageUrl = _.get(rawData, 'image_url');
 
     return user;
   }

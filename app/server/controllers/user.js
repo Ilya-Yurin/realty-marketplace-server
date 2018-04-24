@@ -1,16 +1,14 @@
 'use strict';
 
 import passport from 'passport';
+import BaseController from './base-controller';
 import UserService from '../../services/users';
-import Token from '../../util/token';
 
-class UsersController {
+class UsersController extends BaseController {
 
   constructor (router) {
-    this.router = router;
+    super(router);
     this.registerRoutes();
-
-    return this.router;
   }
 
   registerRoutes () {

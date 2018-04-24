@@ -1,26 +1,44 @@
 'use strict';
 
+import Sequelize from 'sequelize';
 import passport from 'passport';
+import BaseController from './base-controller';
 import Token from '../../util/token';
 import { UserService } from '../../services/';
 
-class AuthController {
+class AuthController extends BaseController {
 
   constructor (router) {
-    this.router = router;
+    super(router);
     this.registerRoutes();
-
-    return this.router;
   }
 
   registerRoutes () {
-    this.router.post('/login', passport.authenticate('local', { session: false } ), this.getAuthData.bind(this));
-    this.router.post('/registrations', passport.authenticate('local-signup', { session: false }), this.getAuthData.bind(this));
-    this.router.get('/google', passport.authenticate('google', { scope: ['email profile'] }));
-    // callback route for google to redirect to
-    this.router.get('/google/redirect', passport.authenticate('google', { session: false }), this.handleGoogleCallback.bind(this));
-    this.router.get('/self', passport.authenticate('jwt', {session: false}), this.getUser.bind(this));
-    this.router.patch('/profile', passport.authenticate('jwt', {session: false}), this.updateProfile.bind(this));
+    this.router.post(
+      '/login',
+      passport.authenticate('local', { session: false } ),
+      this.getAuthData.bind(this)
+    );
+    this.router.post(
+      '/registrations',
+      passport.authenticate('local-signup', { session: false }),
+      this.getAuthData.bind(this)
+    );
+    this.router.post(
+      '/google',
+      passport.authenticate('google-token', { scope: ['email profile'], session: false }),
+      this.googleAuth.bind(this)
+    );
+    this.router.get(
+      '/self',
+      passport.authenticate('jwt', { session: false }),
+      this.getUser.bind(this)
+    );
+    this.router.patch(
+      '/profile',
+      passport.authenticate('jwt', { session: false }),
+      this.updateProfile.bind(this)
+    );
   }
 
   getAuthData(req, res) {
@@ -31,8 +49,12 @@ class AuthController {
     res.json({ user: req.user });
   }
 
-  handleGoogleCallback (req, res) {
-    res.json({ user: req.user, token: { access: Token.createToken(req.user.id) } });
+  googleAuth (req, res) {
+    if (req.user instanceof Sequelize.Model) {
+      res.json({ user: req.user, token: { access: Token.createToken(req.user.id) } });
+    } else {
+      res.json({ user: req.user });
+    }
   }
 
   async updateProfile (req,res) {
@@ -42,7 +64,6 @@ class AuthController {
     } else {
       res.json({ user: updatedUser });
     }
-
   }
 }
 module.exports = AuthController;

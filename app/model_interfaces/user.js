@@ -14,6 +14,7 @@ export default class User {
     this._password = null;
     this._google_id = null;
     this._image_url = null;
+    this._link = null;
     this._createdAt = null;
     this._updatedAt = null;
   }
@@ -94,6 +95,14 @@ export default class User {
     this._image_url = value;
   }
 
+  get link () {
+    return this._link
+  }
+
+  set link (value) {
+    this._link = value
+  }
+
   get createdAt () {
     return this._createdAt;
   }
@@ -116,10 +125,25 @@ export default class User {
       email: this._email,
       google_id: this._google_id,
       image_url: this._image_url,
+      phone: this._phone,
       password: this._password,
       type: this._type || USERS_CONSTANT.USER,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
+    };
+  }
+
+  toClientJson () {
+    return {
+      first_name: this._first_name,
+      last_name: this._last_name,
+      username: this._username,
+      email: this._email,
+      phone: this._phone,
+      google_id: this._google_id,
+      image_url: this._image_url,
+      type: this._type || USERS_CONSTANT.USER,
+      link: this._link,
     };
   }
 }

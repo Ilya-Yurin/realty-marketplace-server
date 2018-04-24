@@ -27,7 +27,7 @@ export default class Server {
     }
 
     passport.serializeUser((loggedUser, done) => {
-      return done(null, loggedUser.get().id);
+      return done(null, loggedUser.id);
     });
     passport.deserializeUser((id, done) => {
       return user.findById(id).then((loggedUser) => {

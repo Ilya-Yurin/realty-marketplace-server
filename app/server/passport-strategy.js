@@ -3,7 +3,7 @@
 import passport from 'passport';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import { GOOGLE, SECRET_KEY } from '../../config/keys'
-import GoogleStrategy from 'passport-google-oauth20/lib/index';
+import { Strategy as GoogleTokenStrategy } from 'passport-google-token';
 import { Sequelize } from '../models';
 import { UserRepository } from '../model_repositories';
 import { UserMapper } from '../mappers';
@@ -75,10 +75,9 @@ export default class PassportWrapper {
   }
 
   static googleStrategy () {
-    return new GoogleStrategy({
+    return new GoogleTokenStrategy({
         clientID: GOOGLE.CLIENT_ID,
         clientSecret: GOOGLE.CLIENT_SECRET,
-        callbackURL: GOOGLE.REDIRECT_URI
       }, async (accessToken, refreshToken, profile, done) => {
         const userRawData = UserMapper.fromGoogleToModel(profile);
         const userInstance = await UserRepository.findSocialAccount({
@@ -89,7 +88,7 @@ export default class PassportWrapper {
         if (userInstance instanceof Sequelize.Model) {
           done(null, await userInstance.update(userRawData.socialIds));
         } else {
-          done(null, await UserService.create(userRawData.toJson()));
+          done(null, userRawData.toClientJson());
         }
       });
   }
